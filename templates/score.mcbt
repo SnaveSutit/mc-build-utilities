@@ -35,6 +35,26 @@ template sub {
 	}
 }
 
+template mul {
+	# mul <name> <objective> <value>
+	with name:word objective:word value:word {
+		load {
+			scoreboard players set <%value%> <%config.internalScoreboardName%> <%value%>
+		}
+		scoreboard players operation <%name%> <%objective%> *= <%value%> <%config.internalScoreboardName%>
+	}
+}
+
+template div {
+	# div <name> <objective> <value>
+	with name:word objective:word value:word {
+		load {
+			scoreboard players set <%value%> <%config.internalScoreboardName%> <%value%>
+		}
+		scoreboard players operation <%name%> <%objective%> /= <%value%> <%config.internalScoreboardName%>
+	}
+}
+
 # Operations
 
 # If the second username is a number and no objective is specified, it will be auto-initialized with a value using the configured internal scoreboard.
