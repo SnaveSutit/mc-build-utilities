@@ -1,3 +1,5 @@
+# Very basic shorthand templates for scoreboard commands
+
 template set {
 	# set <name> <objective> <value>
 	with name:word objective:word value:word {
@@ -34,6 +36,16 @@ template sub {
 }
 
 # Operations
+
+# If the second username is a number and no objective is specified, it will be auto-initialized with a value using the configured internal scoreboard.
+# op @s objective *= 2
+# >>> scoreboard players operation @s objective *= 2 mcb.internal
+# >>> (in generated on-load function) scoreboard players set 2 mcb.internal 2
+
+# If the second objective is omitted, the first objective will be used in it's place.
+# op #count objective /= @s
+# >>> scoreboard players operation #count objective /= @s objective
+
 template op {
 	# Implied secondary objective
 	# op <name1> <objective1> <operation> <name2>
