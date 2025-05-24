@@ -1,0 +1,38 @@
+template sequence {
+	with block:block {
+		<%%
+			const commands = block.node.body
+			if (commands.length === 0) return
+
+			let totalDelay = 0
+			let sectionCommands = []
+			const units = { t:1, s:20, d:24000 }
+			const mcFile = block.ctx.compiler.files.get(commands[0].pos.file)
+
+			const emitSection = (commands, totalDelay) => {
+				block.node.body = sectionCommands
+				emit(`schedule function ${embed(block).replace('function ', '')} ${totalDelay}t`)
+			}
+
+			;for (const command of commands) {
+				if (command._hx_index === 0 && /^wait /.test(command.value)) {
+					const value = parseInt(command.value.substring(5), 10)
+					if (isNaN(value)) throw new Error(`Invalid sequence delay: ${command.value}`)
+					const multiplier = units[command.value.at(-1)] ?? 1 // Default to ticks
+
+					if (sectionCommands.length > 0) {
+						emitSection(sectionCommands, totalDelay)
+						sectionCommands = []
+					}
+
+					totalDelay += value * multiplier
+					continue
+				}
+				if (totalDelay === 0) mcFile.compileCommand(command, block.ctx)
+				else sectionCommands.push(command)
+
+			}
+			if (sectionCommands.length) emitSection(sectionCommands, totalDelay)
+		%%>
+	}
+}
