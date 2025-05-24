@@ -72,12 +72,16 @@ Perform a scoreboard operation on a score holder using another score holder.
 
 ```
 op <target> <targetObjective> <operation> <source> <sourceObjective>
+
+>>> scoreboard players operation <target> <targetObjective> <operation> <source> <sourceObjective>
 ```
 
 Omitting the sourceObjective will use the targetObjective in it's place.
 
 ```
 op <target> <targetObjective> <operation> <source>
+
+>>> scoreboard players operation <target> <targetObjective> <operation> <source> <targetObjective>
 ```
 
 ## `sequence.mcbt`
