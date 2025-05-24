@@ -38,8 +38,8 @@ template sequence {
 				}
 				if (totalDelay === 0) mcFile.compileCommand(command, block.ctx)
 				else sectionCommands.push(command)
-
 			}
+
 			if (sectionCommands.length) emitSection(sectionCommands, totalDelay)
 		%%>
 	}
